@@ -1,0 +1,24 @@
+{
+  "name": "ccgs-to-codex",
+  "version": "0.1.0",
+  "description": "Claude Code Game Studios 在 Codex 上的适配版：48 个角色 + 37 个技能 + 11 条路径范围规则。",
+  "author": {
+    "name": "toimark"
+  },
+  "license": "MIT",
+  "keywords": ["game-development", "agents", "skills", "godot", "unity", "unreal"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Game Studios",
+    "shortDescription": "把 Codex 会话变成一个游戏开发工作室。",
+    "longDescription": "提供 48 个游戏开发角色（总监 / 部门负责人 / 专家三层）、37 个工作流技能（评审、制作、发布、创意、团队协作）以及 11 条按路径范围生效的编码标准。源自 Claude Code Game Studios，Codex 端通过 AGENTS.md、子目录 AGENTS.md 与 .githooks/ 等机制实现等价行为。",
+    "developerName": "toimark",
+    "capabilities": ["Interactive", "Write"],
+    "defaultPrompt": [
+      "请按 /start 技能流程引导我从零开始一个新的游戏项目。",
+      "请按 /sprint-plan 技能给我做下一个冲刺规划。",
+      "请按 /code-review 技能审查 src/gameplay/ 下最近的改动。"
+    ],
+    "category": "Productivity"
+  }
+}

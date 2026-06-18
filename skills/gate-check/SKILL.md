@@ -1,0 +1,19 @@
+---
+name: gate-check
+description: "验证项目是否准备好进入下一个开发阶段。产出 PASS/CONCERNS/FAIL 判定结果，附带具体的阻碍项和所需工件。"
+---
+
+# gate-check（Codex 适配薄壳）
+
+本技能是 Codex 端的薄壳，单一事实源在
+[.claude/skills/gate-check/SKILL.md](../../.claude/skills/gate-check/SKILL.md)。
+
+当用户请求触发此技能时：
+
+1. 阅读上述 Claude 源文件中的工作流。
+2. 把 Claude Code 工具语义映射到 Codex 等价工具：
+   - Read / Glob / Grep -> shell_command 加 rg / Get-ChildItem / Get-Content
+   - Write / Edit -> apply_patch
+   - Bash -> shell_command
+   - AskUserQuestion -> 直接向用户提问（Default 模式）或 Plan 模式下 request_user_input
+3. 按 [AGENTS.md](../../AGENTS.md) 的协作协议（提问 -> 选项 -> 决定 -> 草稿 -> 审批）执行。
