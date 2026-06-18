@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/C/Program Files/Git/bin/bash
 # pre-push: 复用 .claude/hooks/validate-push.sh 的验证逻辑
 # 通过合成 Claude Code PreToolUse JSON 输入触发同一份脚本。
 # 当前策略与原脚本一致：推送到受保护分支只警告，不阻断。
 
 set -e
 
-# 兜底 PATH：在 Windows 下确保 cat / grep / sed 等 POSIX 工具可用。
+# 兜底 PATH：确保 validate-push.sh 内部能找到 cat/grep/sed
 if [ -d "/usr/bin" ]; then
     export PATH="/usr/bin:$PATH"
 fi
@@ -25,4 +25,4 @@ fi
 cat >/dev/null
 
 printf '{"tool_name":"Bash","tool_input":{"command":"git push"}}' \
-    | "$BASH" "$VALIDATOR"
+    | /usr/bin/bash "$VALIDATOR"

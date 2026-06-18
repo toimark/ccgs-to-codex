@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/C/Program Files/Git/bin/bash
 # pre-commit: 复用 .claude/hooks/validate-commit.sh 的验证逻辑
 # 通过合成 Claude Code PreToolUse JSON 输入，让同一份脚本在普通 git 流程下也生效。
 # 退出码与 validate-commit.sh 一致：0 = 允许，2 = 阻断。
 
 set -e
 
-# 兜底 PATH：在 Windows 下确保 cat / grep / sed 等 POSIX 工具可用。
+# 兜底 PATH：确保 validate-commit.sh 内部能找到 cat/grep/sed
 if [ -d "/usr/bin" ]; then
     export PATH="/usr/bin:$PATH"
 fi
@@ -21,4 +21,4 @@ if [ ! -f "$VALIDATOR" ]; then
 fi
 
 printf '{"tool_name":"Bash","tool_input":{"command":"git commit"}}' \
-    | "$BASH" "$VALIDATOR"
+    | /usr/bin/bash "$VALIDATOR"
