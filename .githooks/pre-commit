@@ -1,0 +1,19 @@
+#!/bin/bash
+# pre-commit: 复用 .claude/hooks/validate-commit.sh 的验证逻辑
+# 通过合成 Claude Code PreToolUse JSON 输入，让同一份脚本在普通 git 流程下也生效。
+# 退出码与 validate-commit.sh 一致：0 = 允许，2 = 阻断。
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+if [ -z "$REPO_ROOT" ]; then
+    exit 0
+fi
+
+VALIDATOR="$REPO_ROOT/.claude/hooks/validate-commit.sh"
+if [ ! -f "$VALIDATOR" ]; then
+    exit 0
+fi
+
+printf '{"tool_name":"Bash","tool_input":{"command":"git commit"}}' \
+    | bash "$VALIDATOR"

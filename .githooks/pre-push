@@ -1,0 +1,23 @@
+#!/bin/bash
+# pre-push: 复用 .claude/hooks/validate-push.sh 的验证逻辑
+# 通过合成 Claude Code PreToolUse JSON 输入触发同一份脚本。
+# 当前策略与原脚本一致：推送到受保护分支只警告，不阻断。
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+if [ -z "$REPO_ROOT" ]; then
+    exit 0
+fi
+
+VALIDATOR="$REPO_ROOT/.claude/hooks/validate-push.sh"
+if [ ! -f "$VALIDATOR" ]; then
+    exit 0
+fi
+
+# 丢弃 git 传入的 ref 行（pre-push 会从 stdin 读取 ref 信息），
+# 避免被原脚本当作 PreToolUse JSON 误读。
+cat >/dev/null
+
+printf '{"tool_name":"Bash","tool_input":{"command":"git push"}}' \
+    | bash "$VALIDATOR"
