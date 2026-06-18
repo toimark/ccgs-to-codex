@@ -5,6 +5,11 @@
 
 set -e
 
+# 兜底 PATH：在 Windows 下确保 cat / grep / sed 等 POSIX 工具可用。
+if [ -d "/usr/bin" ]; then
+    export PATH="/usr/bin:$PATH"
+fi
+
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 if [ -z "$REPO_ROOT" ]; then
     exit 0
@@ -20,4 +25,4 @@ fi
 cat >/dev/null
 
 printf '{"tool_name":"Bash","tool_input":{"command":"git push"}}' \
-    | bash "$VALIDATOR"
+    | "$BASH" "$VALIDATOR"

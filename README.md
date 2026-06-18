@@ -14,6 +14,7 @@
   <a href=".claude/hooks"><img src="https://img.shields.io/badge/hooks-8-orange" alt="8 Hooks"></a>
   <a href=".claude/rules"><img src="https://img.shields.io/badge/rules-11-red" alt="11 Rules"></a>
   <a href="https://docs.anthropic.com/en/docs/claude-code"><img src="https://img.shields.io/badge/built%20for-Claude%20Code-f5f5f5?logo=anthropic" alt="Built for Claude Code"></a>
+  <a href="AGENTS.md"><img src="https://img.shields.io/badge/compatible%20with-Codex-10a37f?logo=openai&logoColor=white" alt="Compatible with Codex"></a>
   <a href="https://ko-fi.com/donchitos"><img src="https://img.shields.io/badge/Ko--fi-Support%20this%20project-ff5e5b?logo=ko-fi&logoColor=white" alt="Ko-fi"></a>
 </p>
 
@@ -117,10 +118,20 @@
 ### 前置要求
 
 - [Git](https://git-scm.com/)
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)（`npm install -g @anthropic-ai/claude-code`）
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)（`npm install -g @anthropic-ai/claude-code`），**或** [Codex](https://github.com/openai/codex)
 - **推荐**：[jq](https://jqlang.github.io/jq/)（用于钩子验证）和 Python 3（用于 JSON 验证）
 
 所有钩子在缺少可选工具时会优雅降级——不会导致任何问题，只是失去验证功能。
+
+> **使用 Codex？** 本仓库正在向 Codex 迁移，主上下文文件为
+> [AGENTS.md](AGENTS.md)，详情参见 [docs/CODEX-MIGRATION.md](docs/CODEX-MIGRATION.md)。
+> Claude Code 仍可正常使用，二者并存。
+>
+> **启用 Git hooks**（推荐，Codex 也会受益）：
+> ```bash
+> git config core.hooksPath .githooks
+> ```
+> 详见 [.githooks/README.md](.githooks/README.md)。
 
 ### 安装
 
@@ -130,14 +141,25 @@
    cd my-game
    ```
 
-2. **打开 Claude Code** 并启动会话：
+2. **打开你的 AI 编码助手**：
+
+   Claude Code：
    ```bash
    claude
    ```
 
-3. **运行 `/start`** ——系统会询问你当前的状态（毫无头绪、模糊概念、清晰设计、已有工作），然后引导你进入正确的工作流。不做任何假设。
+   或 Codex：
+   ```bash
+   codex
+   ```
 
-   如果你已经知道自己需要什么，也可以直接跳转到特定技能：
+3. **触发 `/start` 引导流程** ——系统会询问你当前的状态（毫无头绪、模糊概念、清晰设计、已有工作），然后引导你进入正确的工作流。不做任何假设。
+
+   - 在 Claude Code 中：直接输入 `/start`。
+   - 在 Codex 中：暂无原生斜杠命令，可以直接说"请按 `/start` 技能流程引导我"，
+     Codex 会读取 [.claude/skills/start/SKILL.md](.claude/skills/start/SKILL.md) 并执行。
+
+   如果你已经知道自己需要什么，也可以直接跳转到特定技能（同样支持上述两种调用方式）：
    - `/brainstorm` — 从零开始探索游戏创意
    - `/setup-engine godot 4.6` — 如果你已经确定引擎，配置你的引擎
    - `/project-stage-detect` — 分析已有项目
